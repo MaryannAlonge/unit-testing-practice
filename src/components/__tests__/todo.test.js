@@ -1,7 +1,11 @@
 import { render, screen, cleanup } from "@testing-library/react";
+import renderer from "react-test-renderer"
 import Todo from "../todo"
 
 // use the cleanup method to cleanup after each text
+afterEach(() => {
+  cleanup();
+})
 
 test("should render non-completed todo ", () => {
   const todo = {id: 1, title: "wash dishes", completed: false, }
@@ -24,5 +28,14 @@ test("should render completed todo ", () => {
   // make assertions
   expect(todoElement).toBeInTheDocument();
   expect(todoElement).toHaveTextContent("wash car");
-
+  // test wether the todo is completed or not
+  
 });
+
+// test if anytthing has changed since the last test run
+test("matches snapshot", () =>{
+  const todo = {id: 1, title: "wash dishes", completed: false, }
+  // create a tree of the component
+  const tree = renderer.create(<Todo todo={todo}/>).toJSON();
+  expect(tree).toMatchSnapshot()
+})
