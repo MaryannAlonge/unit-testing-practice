@@ -5,5 +5,8 @@ test("should render todo component", () => {
   // use the render function imported above
   render(<Todo/>);
   // retrieve the component
-  const todoElement = screen.getAllByTestId();
+  const todoElement = screen.getByTestId("todo-1");
+  // make assertions
+  expect(todoElement).toBeInTheDocument();
+  
 })
